@@ -16,4 +16,6 @@ services:
   voicebox:
     container_name: "SecretariAI-voicebox"
     image: voicevox/voicevox_engine:cpu-ubuntu20.04-latest
+    ports:
+    - 50021:50021
     tty: true
