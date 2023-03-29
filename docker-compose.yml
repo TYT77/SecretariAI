@@ -20,3 +20,4 @@ services:
     ports:
     - 50021:50021
     tty: true
+    init: true
