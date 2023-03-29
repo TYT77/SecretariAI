@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Player</title>
+</head>
+<body>
+  <h1>タイトル</h1>
+  <textarea id="text"></textarea><br />
+  <button onclick="sendData()">Send</button><br />
+  <audio id="audio"></audio>
+  
+  <script>
+    function sendData() {
+
+      const text = document.getElementById('text').value.trim();
+
+      fetch('/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text })
+      })
+      .then(response => response.arrayBuffer())
+      .then(buffer => {
+        let audioContext = new AudioContext();
+        audioContext.decodeAudioData(buffer, decodedData => {
+          let source = audioContext.createBufferSource();
+          source.buffer = decodedData;
+          source.connect(audioContext.destination);
+          source.start();
+        });
+      })
+      .catch(error => console.error(error));
+    }
+  </script>
+</body>
+</html>

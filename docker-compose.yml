@@ -7,6 +7,7 @@ services:
       - ./app:/app
     env_file:
       - ./build/app/.node_env
+      - ./build/app/.node_env_secret
     ports:
     - 3000:3000
     tty: true
@@ -19,3 +20,4 @@ services:
     ports:
     - 50021:50021
     tty: true
+    init: true
