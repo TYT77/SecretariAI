@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Player</title>
+</head>
+<body>
+  <h1>Audio Player</h1>
+  <textarea id="text"></textarea><br />
+  <button onclick="sendData()">Send</button><br />
+  <audio id="audio"></audio>
+  
+  <script>
+    function sendData() {
+      let data = document.getElementById('text').value;
+      fetch('/upload', {
+        method: 'POST',
+        body: data
+      })
+      .then(response => response.arrayBuffer())
+      .then(buffer => {
+        let audioContext = new AudioContext();
+        audioContext.decodeAudioData(buffer, decodedData => {
+          let source = audioContext.createBufferSource();
+          source.buffer = decodedData;
+          source.connect(audioContext.destination);
+          source.start();
+        });
+      })
+      .catch(error => console.error(error));
+    }
+  </script>
+</body>
+</html>

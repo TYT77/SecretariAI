@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Send Text to Server</title>
+</head>
+<body>
+  <h1>Send Text to Server</h1>
+
+  <textarea id="text"></textarea>
+  <br>
+  <button id="send-btn">Send</button>
+
+  <script>
+    const sendBtn = document.getElementById('send-btn');
+    sendBtn.addEventListener('click', function() {
+      const text = document.getElementById('text').value.trim();
+      if (text !== '') {
+        fetch('/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text })
+        })
+          .then(response => response.text())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+      }
+    });
+  </script>
+</body>
+</html>
