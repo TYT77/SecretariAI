@@ -105,4 +105,4 @@ dist
 
 .node_env_secret
 
-wav/*
+.wav
